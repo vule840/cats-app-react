@@ -1,7 +1,6 @@
 import axios from "axios";
 import React from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import Header from "./Header";
 
 interface favorite {
   id: number;
@@ -44,17 +43,17 @@ const Favorites = () => {
 
   const favoritesIMG = favorites.map((favorite: favorite) => {
     return (
-      <div key={favorite.id} className="wrapper">
+      <div key={favorite.id} className="wrapper col">
         <img
+          alt={favorite.url}
           className="masonry-brick masonry-brick--h"
           src={favorite.image.url}
         ></img>
 
-        <a
+        <span
           onClick={() => deleteFromFavorites.mutate(favorite)}
-          href="#"
           className="close"
-        ></a>
+        ></span>
       </div>
     );
   });

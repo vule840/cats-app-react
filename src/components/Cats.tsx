@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
+import { HeartIcon } from "./HeartIcon";
 
 interface cat {
   id: number;
@@ -12,8 +13,8 @@ interface postCat {
 }
 
 const Cats = () => {
-  const [inHover, setHover] = React.useState(false);
   const queryCache = useQueryClient();
+
   const { data: cats = [] } = useQuery("cats", () =>
     fetch("https://api.thecatapi.com/v1/images/search?limit=10").then((res) =>
       res.json()
@@ -46,43 +47,41 @@ const Cats = () => {
   );
 
   const addActive = (event: any, cat: any, index: any) => {
+    console.log(event.target);
     if (event.target.currentSrc === cat.url) {
       addToFavorites.mutate({
         image_id: cat.id,
         sub_id: "your-user-1234",
       });
+
+      event.target.nextSibling.firstChild.classList.add("active");
     }
   };
-  function MouseOver(event: any) {
-    event.target.style.background = "red";
-  }
-  function MouseOut(event: any) {
-    event.target.style.background = "";
-  }
+
   const catsIMG = cats.map((cat: cat, index: number) => {
     return (
       <div
-        onMouseOver={MouseOver}
-        onMouseOut={MouseOut}
         onClick={(event: any) => addActive(event, cat, index)}
         key={cat.id}
         className="wrapper"
-        // onMouseEnter={(i) => setHover(true)}
-        // onMouseLeave={() => setHover(false)}
       >
         <img
           alt={cat.url}
           className="masonry-brick masonry-brick--h"
           src={cat.url}
         ></img>
-        {Object.values(favorites).map((x: any) => {
-          if (x.image.url === cat.url) {
-            return <div key={cat.id} className="heart-shape"></div>;
-          }
-        })}
 
-        {/* {inHover && <div className="add">Add to favorites</div>} */}
-        <div className="add">Hover over me!</div>
+        {favorites.length > 0 ? (
+          Object.values(favorites).map((x: any) => {
+            return x.image.url === cat.url ? (
+              <HeartIcon active={"active"} />
+            ) : (
+              <HeartIcon />
+            );
+          })
+        ) : (
+          <HeartIcon />
+        )}
       </div>
     );
   });

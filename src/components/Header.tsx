@@ -1,11 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
     <header>
-      <Link to="/cats">Home</Link>
-      <Link to="/favorites">Favorites</Link>
+      <NavLink to="/">Home</NavLink>
+      <NavLink activeClassName="activeLink" to="/cats">
+        Cats
+      </NavLink>
+      <NavLink activeClassName="activeLink" to="/favorites">
+        Favorites
+      </NavLink>
     </header>
   );
 };

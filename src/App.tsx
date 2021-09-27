@@ -4,6 +4,8 @@ import Favorites from "./components/Favorites";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Cats from "./components/Cats";
 import Header from "./components/Header";
+import Home from "./components/Home";
+import Footer from "./components/Footer";
 
 const twentyFourHoursInMs = 1000 * 60 * 60 * 24;
 
@@ -24,6 +26,9 @@ function App() {
       <Header />
       <QueryClientProvider client={queryClient}>
         <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
           <Route path="/cats">
             <Cats />
           </Route>
@@ -32,6 +37,7 @@ function App() {
           </Route>
         </Switch>
       </QueryClientProvider>
+      <Footer />
     </div>
   );
 }

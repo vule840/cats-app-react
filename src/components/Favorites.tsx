@@ -59,9 +59,8 @@ const Favorites = () => {
   });
   return (
     <div>
-      <h2>Favorites</h2>
       <div className="masonry masonry--h">
-        {favoritesIMG.length ? favoritesIMG : "Loading ..."}
+        {favoritesIMG.length ? favoritesIMG : "No Favorite cat yet ..."}
       </div>
     </div>
   );

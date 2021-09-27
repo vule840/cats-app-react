@@ -35,7 +35,6 @@ const Favorites = () => {
     },
     {
       onSuccess: () => {
-        console.log("Sucess");
         queryCache.invalidateQueries("favorites");
       },
     }

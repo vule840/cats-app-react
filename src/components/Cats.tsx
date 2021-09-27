@@ -39,7 +39,6 @@ const Cats = () => {
     },
     {
       onSuccess: () => {
-        console.log("Success");
         queryCache.invalidateQueries("favorites");
       },
       onError: (err: any) => {},
@@ -47,7 +46,6 @@ const Cats = () => {
   );
 
   const addActive = (event: any, cat: any, index: any) => {
-    console.log(event.target);
     if (event.target.currentSrc === cat.url) {
       addToFavorites.mutate({
         image_id: cat.id,

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { HeartIcon } from "./HeartIcon";
 
@@ -14,7 +14,7 @@ interface postCat {
 
 const Cats = () => {
   const queryCache = useQueryClient();
-
+  const [indexCat, setIndexCat] = React.useState<any[]>([])
   const { data: cats = [] } = useQuery("cats", () =>
     fetch("https://api.thecatapi.com/v1/images/search?limit=10").then((res) =>
       res.json()
@@ -45,15 +45,24 @@ const Cats = () => {
     }
   );
 
-  const addActive = (event: any, cat: any, index: any) => {
-    if (event.target.currentSrc === cat.url) {
-      addToFavorites.mutate({
-        image_id: cat.id,
-        sub_id: "your-user-1234",
-      });
+  useEffect(() => {
+    console.log(indexCat)
+    let uniqueChars = [...new Set(indexCat)];
 
-      event.target.nextSibling.firstChild.classList.add("active");
-    }
+    localStorage.setItem('favs', JSON.stringify(uniqueChars) || '0')
+  }, [indexCat])
+  const addActive = (event: any, cat: any, index: any) => {
+    setIndexCat((prevState) => {
+        return [...prevState,  cat.id]
+    })
+    // if (event.target.currentSrc === cat.url) {
+    //   addToFavorites.mutate({
+    //     image_id: cat.id,
+    //     sub_id: "your-user-1234",
+    //   });
+
+    //   event.target.nextSibling.firstChild.classList.add("active");
+    // }
   };
 
   const catsIMG = cats.map((cat: cat, index: number) => {
@@ -87,7 +96,9 @@ const Cats = () => {
   return (
     <div className="masonry masonry--h">
       {catsIMG.length ? catsIMG : "Loading ..."}
+      
     </div>
+    
   );
 };
 

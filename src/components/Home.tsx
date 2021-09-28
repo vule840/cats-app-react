@@ -12,13 +12,13 @@ const Home = () => {
         <strong> the Favorites</strong> page.
       </p>
       <p>
-        In this App, localStorage wasn't used but{" "}
+        In this App, localStorage <del>wasn't</del> was used and{" "}
         <a href="https://thecatapi.com/">
           <strong> Cats API</strong>
         </a>
         <br />
-        service as it has all the routes for favorites list, but will add
-        localStorage variation branch also.
+        service as it has all the routes for favorites list.{" "}
+        <del> but will add localStorage variation branch also.</del>
       </p>
     </div>
   );

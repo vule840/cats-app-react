@@ -11,6 +11,9 @@ const Header = () => {
       <NavLink activeClassName="activeLink" to="/favorites">
         Favorites
       </NavLink>
+      <NavLink activeClassName="activeLink" to="/localstorage">
+        Local storage
+      </NavLink>
     </header>
   );
 };

@@ -6,6 +6,7 @@ import Cats from "./components/Cats";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
+import LocalStorage from "./components/LocalStorage";
 
 const twentyFourHoursInMs = 1000 * 60 * 60 * 24;
 
@@ -34,6 +35,9 @@ function App() {
           </Route>
           <Route path="/favorites">
             <Favorites />
+          </Route>
+          <Route path="/localstorage">
+            <LocalStorage />
           </Route>
         </Switch>
       </QueryClientProvider>

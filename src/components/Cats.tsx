@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { HeartIcon } from "./HeartIcon";
 
@@ -14,7 +14,11 @@ interface postCat {
 
 const Cats = () => {
   const queryCache = useQueryClient();
-
+  const [indexCat, setIndexCat] = React.useState<any[]>(
+    JSON.parse(localStorage.getItem("favs") || "0")
+      ? JSON.parse(localStorage.getItem("favs") || "0")
+      : []
+  );
   const { data: cats = [] } = useQuery("cats", () =>
     fetch("https://api.thecatapi.com/v1/images/search?limit=10").then((res) =>
       res.json()
@@ -45,7 +49,14 @@ const Cats = () => {
     }
   );
 
+  useEffect(() => {
+    let uniqueChars = [...new Set(indexCat)];
+    localStorage.setItem("favs", JSON.stringify(uniqueChars) || "0");
+  }, [indexCat, favorites]);
   const addActive = (event: any, cat: any, index: any) => {
+    setIndexCat((prevState) => {
+      return [...prevState, cat.url];
+    });
     if (event.target.currentSrc === cat.url) {
       addToFavorites.mutate({
         image_id: cat.id,

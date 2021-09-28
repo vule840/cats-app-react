@@ -14,7 +14,11 @@ interface postCat {
 
 const Cats = () => {
   const queryCache = useQueryClient();
-  const [indexCat, setIndexCat] = React.useState<any[]>([])
+  const [indexCat, setIndexCat] = React.useState<any[]>(
+    JSON.parse(localStorage.getItem("favs") || "0")
+      ? JSON.parse(localStorage.getItem("favs") || "0")
+      : []
+  );
   const { data: cats = [] } = useQuery("cats", () =>
     fetch("https://api.thecatapi.com/v1/images/search?limit=10").then((res) =>
       res.json()
@@ -46,23 +50,21 @@ const Cats = () => {
   );
 
   useEffect(() => {
-    console.log(indexCat)
     let uniqueChars = [...new Set(indexCat)];
-
-    localStorage.setItem('favs', JSON.stringify(uniqueChars) || '0')
-  }, [indexCat])
+    localStorage.setItem("favs", JSON.stringify(uniqueChars) || "0");
+  }, [indexCat, favorites]);
   const addActive = (event: any, cat: any, index: any) => {
     setIndexCat((prevState) => {
-        return [...prevState,  cat.id]
-    })
-    // if (event.target.currentSrc === cat.url) {
-    //   addToFavorites.mutate({
-    //     image_id: cat.id,
-    //     sub_id: "your-user-1234",
-    //   });
+      return [...prevState, cat.url];
+    });
+    if (event.target.currentSrc === cat.url) {
+      addToFavorites.mutate({
+        image_id: cat.id,
+        sub_id: "your-user-1234",
+      });
 
-    //   event.target.nextSibling.firstChild.classList.add("active");
-    // }
+      event.target.nextSibling.firstChild.classList.add("active");
+    }
   };
 
   const catsIMG = cats.map((cat: cat, index: number) => {
@@ -96,9 +98,7 @@ const Cats = () => {
   return (
     <div className="masonry masonry--h">
       {catsIMG.length ? catsIMG : "Loading ..."}
-      
     </div>
-    
   );
 };
 

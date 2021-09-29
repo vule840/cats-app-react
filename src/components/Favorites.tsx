@@ -1,7 +1,7 @@
 import axios from "axios";
-import React from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-
+import { useSnackbar } from "react-simple-snackbar";
+import { options } from "./options-helper";
 interface favorite {
   id: number;
   url: string;
@@ -11,6 +11,7 @@ interface favorite {
 }
 
 const Favorites = () => {
+  const [openSnackbar] = useSnackbar(options);
   const queryCache = useQueryClient();
 
   const { data: favorites = [] } = useQuery("favorites", () =>
@@ -36,6 +37,7 @@ const Favorites = () => {
     {
       onSuccess: () => {
         queryCache.invalidateQueries("favorites");
+        openSnackbar("Removed from favs.", 1000);
       },
     }
   );

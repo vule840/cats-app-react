@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
+import { useSnackbar } from "react-simple-snackbar";
+import { options } from "./options-helper";
 
 const LocalStorage = () => {
+  const [openSnackbar] = useSnackbar(options);
   const [favs, addFavs] = React.useState<any[]>(
     JSON.parse(localStorage.getItem("favs") || "0")
       ? JSON.parse(localStorage.getItem("favs") || "0")
@@ -13,6 +16,7 @@ const LocalStorage = () => {
     favs.splice(index, 1);
     addFavs([...favs]);
     localStorage.setItem("favs", JSON.stringify(favs) || "0");
+    openSnackbar("Removed from favs.", 1000);
   };
   const favStorage = favs.map((x: any, index: any) => {
     return (

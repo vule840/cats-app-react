@@ -3,7 +3,7 @@ import { useSnackbar } from "react-simple-snackbar";
 import { options } from "./options-helper";
 
 const LocalStorage = () => {
-  const [openSnackbar, closeSnackbar] = useSnackbar(options);
+  const [openSnackbar] = useSnackbar(options);
   const [favs, addFavs] = React.useState<any[]>(
     JSON.parse(localStorage.getItem("favs") || "0")
       ? JSON.parse(localStorage.getItem("favs") || "0")

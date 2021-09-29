@@ -1,5 +1,4 @@
 import axios from "axios";
-import React from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useSnackbar } from "react-simple-snackbar";
 import { options } from "./options-helper";
@@ -12,7 +11,7 @@ interface favorite {
 }
 
 const Favorites = () => {
-  const [openSnackbar, closeSnackbar] = useSnackbar(options);
+  const [openSnackbar] = useSnackbar(options);
   const queryCache = useQueryClient();
 
   const { data: favorites = [] } = useQuery("favorites", () =>

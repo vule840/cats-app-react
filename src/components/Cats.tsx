@@ -14,7 +14,7 @@ interface postCat {
 }
 
 const Cats = () => {
-  const [openSnackbar, closeSnackbar] = useSnackbar(options);
+  const [openSnackbar] = useSnackbar(options);
   const queryCache = useQueryClient();
   const [indexCat, setIndexCat] = React.useState<any[]>(
     JSON.parse(localStorage.getItem("favs") || "0")

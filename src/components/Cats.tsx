@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { HeartIcon } from "./HeartIcon";
-
+import { useSnackbar } from "react-simple-snackbar";
+import { options } from "./options-helper";
 interface cat {
   id: number;
   url: string;
@@ -13,6 +14,7 @@ interface postCat {
 }
 
 const Cats = () => {
+  const [openSnackbar, closeSnackbar] = useSnackbar(options);
   const queryCache = useQueryClient();
   const [indexCat, setIndexCat] = React.useState<any[]>(
     JSON.parse(localStorage.getItem("favs") || "0")
@@ -53,10 +55,12 @@ const Cats = () => {
     let uniqueChars = [...new Set(indexCat)];
     localStorage.setItem("favs", JSON.stringify(uniqueChars) || "0");
   }, [indexCat, favorites]);
+
   const addActive = (event: any, cat: any, index: any) => {
     setIndexCat((prevState) => {
       return [...prevState, cat.url];
     });
+    openSnackbar("Added to favs.", 1000);
     if (event.target.currentSrc === cat.url) {
       addToFavorites.mutate({
         image_id: cat.id,
